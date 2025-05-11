@@ -34,9 +34,9 @@ public class MemberMission extends BaseEntity {
     public String toString() {
         return "MemberMission{" +
                 "id=" + id +
-                ", member=" + (member != null ? member.getName() : "N/A") +
-                ", mission=" + (mission != null ? mission.getMissionSpec() : "N/A") +
-                ", status='" + status + '\'' +
+                ", memberId=" + member.getId() +
+                ", missionId=" + mission.getId() +
+                ", status=" + status +
                 '}';
     }
 }

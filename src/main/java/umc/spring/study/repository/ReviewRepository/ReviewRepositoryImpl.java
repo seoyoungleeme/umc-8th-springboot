@@ -13,26 +13,17 @@ public class ReviewRepositoryImpl implements ReviewRepositoryCustom {
 
     private final JPAQueryFactory queryFactory;
     private final EntityManager entityManager;
+    private final QReview review = QReview.review;
 
     @Override
-    public boolean existsByMemberAndStore(Long memberId, Long storeId) {
-        Long count = queryFactory
-                .select(QReview.review.count())
-                .from(QReview.review)
-                .where(QReview.review.member.id.eq(memberId)
-                        .and(QReview.review.store.id.eq(storeId)))
-                .fetchOne();
+    public Review saveReview(Long memberId, Long storeId, String title, float score) {
+        Review newReview = Review.builder()
+                .title(title)
+                .score(score)
+                .build();
 
-        return count != null && count > 0;
-    }
-
-    @Override
-    public Review saveReview(Review review) {
-        if (review.getId() == null) {
-            entityManager.persist(review);  // 새로 생성된 엔티티
-        } else {
-            entityManager.merge(review);    // 기존 엔티티 업데이트
-        }
-        return review;
+        entityManager.persist(newReview);
+        System.out.println("Review saved: " + newReview);
+        return newReview;
     }
 }

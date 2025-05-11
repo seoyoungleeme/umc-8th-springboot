@@ -1,9 +1,9 @@
 package umc.spring.study.repository.MemberMissionRepository;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import umc.spring.study.domain.mapping.MemberMission;
 
+import java.util.List;
+
 public interface MemberMissionRepositoryCustom {
-    Page<MemberMission> findMissionsByStatus(Long memberId, String status, Pageable pageable);
+    List<MemberMission> findMissionsByStatusAndMemberId(Long memberId, String status, int limit, int offset);
 }

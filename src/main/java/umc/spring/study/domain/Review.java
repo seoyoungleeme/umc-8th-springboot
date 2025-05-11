@@ -29,4 +29,15 @@ public class Review extends BaseEntity {
     private Member member;
 
     // 추후에 리뷰 대상(예: 가게)에 대한 연관관계도 여기에 추가될 수 있음
+
+    @Override
+    public String toString() {
+        return "Review{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", score=" + score +
+                ", storeId=" + (store != null ? store.getId() : "N/A") +
+                ", memberId=" + (member != null ? member.getId() : "N/A") +
+                '}';
+    }
 }
