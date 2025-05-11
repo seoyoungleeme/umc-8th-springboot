@@ -29,4 +29,14 @@ public class MemberMission extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private MissionStatus status;
+
+    @Override
+    public String toString() {
+        return "MemberMission{" +
+                "id=" + id +
+                ", member=" + (member != null ? member.getName() : "N/A") +
+                ", mission=" + (mission != null ? mission.getMissionSpec() : "N/A") +
+                ", status='" + status + '\'' +
+                '}';
+    }
 }
