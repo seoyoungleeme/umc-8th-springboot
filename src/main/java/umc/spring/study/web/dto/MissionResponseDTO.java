@@ -7,13 +7,13 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-public class RegionResponseDTO {
+public class MissionResponseDTO {
 
     @Builder
     @Getter
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class CreateStoreResultDTO { // 1. 특정 지역에 가게 추가하기 API
+    public static class createMemberMissionResultDTO { // 4. 가게의 미션을 도전 중인 미션에 추가 (미션 도전하기) API
         private Long id;
         private LocalDateTime createdAt;
     }
