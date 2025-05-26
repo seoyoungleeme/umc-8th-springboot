@@ -18,6 +18,7 @@ public class StoreConverter {
                 .score(request.getScore())
                 .build();
     }
+
     public static StoreResponseDTO.createReviewResultDTO createReviewResultDTO(Review review) {
         return StoreResponseDTO.createReviewResultDTO.builder()
                 .reviewId(review.getId())
