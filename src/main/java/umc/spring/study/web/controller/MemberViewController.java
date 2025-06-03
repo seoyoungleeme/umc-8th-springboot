@@ -1,6 +1,6 @@
 package umc.spring.study.web.controller;
 
-import ch.qos.logback.core.model.Model;
+import org.springframework.ui.Model;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
