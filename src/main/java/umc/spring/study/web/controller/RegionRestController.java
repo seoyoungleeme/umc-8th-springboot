@@ -1,11 +1,9 @@
 package umc.spring.study.web.controller;
 
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import umc.spring.study.apiPayload.ApiResponse;
 import umc.spring.study.converter.RegionConverter;
 import umc.spring.study.domain.Store;

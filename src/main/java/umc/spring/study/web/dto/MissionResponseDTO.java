@@ -14,7 +14,7 @@ public class MissionResponseDTO {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class createMemberMissionResultDTO { // 4. 가게의 미션을 도전 중인 미션에 추가 (미션 도전하기) API
-        private Long id;
+        private Long memberMissionId;
         private LocalDateTime createdAt;
     }
 }

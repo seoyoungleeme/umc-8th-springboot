@@ -15,6 +15,8 @@ import umc.spring.study.domain.Member;
 import umc.spring.study.domain.Review;
 import umc.spring.study.domain.mapping.MemberMission;
 import umc.spring.study.service.MemberService.MemberCommandService;
+import umc.spring.study.service.MemberService.MemberQueryService;
+import umc.spring.study.service.MemberService.MemberQueryServiceImpl;
 import umc.spring.study.web.dto.MemberRequestDTO;
 import umc.spring.study.web.dto.MemberResponseDTO;
 import jakarta.validation.Valid;
@@ -25,6 +27,7 @@ import jakarta.validation.Valid;
 public class MemberRestController {
 
     private final MemberCommandService memberCommandService;
+    private final MemberQueryService memberQueryService;
 
     @PostMapping("/")
     public ApiResponse<MemberResponseDTO.JoinResultDTO> join(@RequestBody @Valid MemberRequestDTO.JoinDto request){

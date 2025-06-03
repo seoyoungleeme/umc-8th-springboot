@@ -41,4 +41,7 @@ public class Mission extends BaseEntity {
                 ", missionSpec='" + missionSpec + '\'' +
                 '}';
     }
+
+    public void setStore(Store store) {
+    }
 }

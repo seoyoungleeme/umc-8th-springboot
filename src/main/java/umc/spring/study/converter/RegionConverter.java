@@ -16,7 +16,7 @@ public class RegionConverter {
     }
     public static RegionResponseDTO.CreateStoreResultDTO toCreateStoreResultDTO(Store store) {
         return RegionResponseDTO.CreateStoreResultDTO.builder()
-                .storeId(store.getId())
+                .id(store.getId())
                 .createdAt(LocalDateTime.now())
                 .build();
     }

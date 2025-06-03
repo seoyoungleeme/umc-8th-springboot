@@ -1,5 +1,6 @@
 package umc.spring.study.service.StoreService;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import umc.spring.study.converter.StoreConverter;
@@ -8,6 +9,7 @@ import umc.spring.study.domain.Review;
 import umc.spring.study.repository.MissionRepository.MissionRepository;
 import umc.spring.study.repository.ReviewRepository.ReviewRepository;
 import umc.spring.study.repository.StoreRepository.StoreRepository;
+import umc.spring.study.web.dto.StoreRequestDTO;
 
 @Service
 @Transactional
@@ -33,3 +35,4 @@ public class StoreCommandServiceImpl implements StoreCommandService {
         return missionRepository.save(mission);
     }
 }
+

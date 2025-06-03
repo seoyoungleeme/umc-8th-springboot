@@ -9,6 +9,7 @@ import java.util.Optional;
 
 public interface MemberQueryService {
     Optional<Member> findMember(Long id);
-    Page<Review> getMyReviewList(Long Id, Integer page);
+    // MemberQueryService.java
+    Page<Review> getMyReviewList(Long memberId, Integer page);
     Page<MemberMission> getMyMissionList(Long Id, Integer page); // 3. 내가 진행 중인 미션 목록 조회하기 API
 }

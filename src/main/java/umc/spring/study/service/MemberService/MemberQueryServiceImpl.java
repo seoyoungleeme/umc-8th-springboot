@@ -1,5 +1,6 @@
 package umc.spring.study.service.MemberService;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -28,7 +29,8 @@ public class MemberQueryServiceImpl implements MemberQueryService{
     }
     @Override
     public Page<Review> getMyReviewList(Long memberId, Integer page) {
-        Member member = memberRepository.findById(memberId).get();
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new RuntimeException("존재하지 않는 회원입니다."));
         Page<Review> MemberPage = reviewRepository.findAllByMember(member, PageRequest.of(page, 10));
 
         return MemberPage;

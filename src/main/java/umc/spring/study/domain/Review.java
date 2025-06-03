@@ -20,6 +20,8 @@ public class Review extends BaseEntity {
 
     private Float score;
 
+    private String body;
+
     @ManyToOne
     @JoinColumn(name = "store_id")  // 실제 DB 컬럼명에 맞게
     private Store store;
@@ -39,5 +41,8 @@ public class Review extends BaseEntity {
                 ", storeId=" + (store != null ? store.getId() : "N/A") +
                 ", memberId=" + (member != null ? member.getId() : "N/A") +
                 '}';
+    }
+
+    public void setStore(Store store) {
     }
 }

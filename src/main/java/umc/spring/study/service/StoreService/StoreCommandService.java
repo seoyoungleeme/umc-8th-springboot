@@ -2,6 +2,7 @@ package umc.spring.study.service.StoreService;
 
 import umc.spring.study.domain.Mission;
 import umc.spring.study.domain.Review;
+import umc.spring.study.web.dto.StoreRequestDTO;
 
 public interface StoreCommandService {
 

@@ -15,7 +15,7 @@ public class StoreConverter {
     public static Review toReview (StoreRequestDTO.createReviewDTO request) { // 2. 가게에 리뷰 추가하기 API
         return Review.builder()
                 .body(request.getBody())
-                .score(request.getScore())
+                .score((float) request.getScore())
                 .build();
     }
 
@@ -25,6 +25,7 @@ public class StoreConverter {
                 .createdAt(LocalDateTime.now())
                 .build();
     }
+
     public static Mission toMission (StoreRequestDTO.createMissionDTO request) { // 3. 가게에 미션 추가하기 API
         return Mission.builder()
                 .reward(request.getReward())

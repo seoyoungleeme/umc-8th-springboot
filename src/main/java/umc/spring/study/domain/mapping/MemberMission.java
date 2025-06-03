@@ -39,4 +39,10 @@ public class MemberMission extends BaseEntity {
                 ", status=" + status +
                 '}';
     }
+
+    public void setMission(Mission mission) {
+    }
+
+    public void setMember(Member member) {
+    }
 }

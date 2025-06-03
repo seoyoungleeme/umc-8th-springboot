@@ -1,5 +1,6 @@
 package umc.spring.study.web.controller;
 
+import ch.qos.logback.core.model.Model;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -28,7 +29,7 @@ public class MemberViewController {
             memberCommandService.joinMember(request);
             return "redirect:/login";
         } catch (Exception e) {
-            // 회원가입 과정에서 에러가 발생할 경우 에러 메시지를 보내고, signup 페이디를 유지합니다.
+            // 회원가입 과정에서 에러가 발생할 경우 에러 메시지를 보내고, signup 페이지를 유지합니다.
             model.addAttribute("error", e.getMessage());
             return "signup";
         }
