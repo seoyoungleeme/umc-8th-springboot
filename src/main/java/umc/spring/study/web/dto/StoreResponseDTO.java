@@ -60,7 +60,7 @@ public class StoreResponseDTO {
         Integer reward;
         String missionSpec;
         LocalDate createdAt;
-    }
+    } // 큰 단위의 DTO를 하나의 클래스로 두고 하위의 자잘한 DTO들은 static으로 둔다.
     @Builder
     @Getter
     @NoArgsConstructor
