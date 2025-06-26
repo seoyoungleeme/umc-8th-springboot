@@ -2,10 +2,13 @@ package umc.spring.study.service.MemberService;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import umc.spring.study.apiPayload.code.status.ErrorStatus;
 import umc.spring.study.apiPayload.exception.handler.FoodCategoryHandler;
+import umc.spring.study.apiPayload.exception.handler.MemberHandler;
 import umc.spring.study.converter.MemberConverter;
 import umc.spring.study.converter.MemberPreferConverter;
 import umc.spring.study.domain.FoodCategory;
@@ -14,7 +17,11 @@ import umc.spring.study.domain.mapping.MemberPrefer;
 import umc.spring.study.repository.FoodCategoryRepository;
 import umc.spring.study.repository.MemberRepository;
 import umc.spring.study.web.dto.MemberRequestDTO;
+import umc.spring.study.web.dto.MemberResponseDTO;
+import umc.spring.study.config.security.jwt.JwtTokenProvider;
 
+
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -47,4 +54,27 @@ public class MemberCommandServiceImpl implements MemberCommandService{
 
         return (Member) memberRepository.save(newMember);
     }
+
+    @Override
+    public MemberResponseDTO.LoginResultDTO loginMember(MemberRequestDTO.LoginRequestDTO request) {
+        Member member = memberRepository.findByEmail(request.getEmail())
+                .orElseThrow(()-> new MemberHandler(ErrorStatus.MEMBER_NOT_FOUND));
+
+        if(!passwordEncoder.matches(request.getPassword(), member.getPassword())) {
+            throw new MemberHandler(ErrorStatus.INVALID_PASSWORD);
+        }
+
+        Authentication authentication = new UsernamePasswordAuthenticationToken(
+                member.getEmail(), null,
+                Collections.singleton(() -> member.getRole().name())
+        );
+
+        String accessToken = jwtTokenProvider.generateToken(authentication);
+
+        return MemberConverter.toLoginResultDTO(
+                member.getId(),
+                accessToken
+        );
+    }
+}
 }

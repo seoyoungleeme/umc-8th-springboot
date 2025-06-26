@@ -1,16 +1,20 @@
 package umc.spring.study.service.MemberService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import umc.spring.study.apiPayload.code.status.ErrorStatus;
+import umc.spring.study.apiPayload.exception.handler.MemberHandler;
 import umc.spring.study.domain.Member;
 import umc.spring.study.domain.Review;
 import umc.spring.study.domain.mapping.MemberMission;
 import umc.spring.study.repository.MemberMissionRepository.MemberMissionRepository;
 import umc.spring.study.repository.MemberRepository;
 import umc.spring.study.repository.ReviewRepository.ReviewRepository;
+import umc.spring.study.web.dto.MemberResponseDTO;
 
 import java.util.Optional;
 
@@ -35,6 +39,18 @@ public class MemberQueryServiceImpl implements MemberQueryService{
 
         return MemberPage;
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public MemberResponseDTO.MemberInfoDTO getMemberInfo(HttpServletRequest request){
+        Authentication authentication = jwtTokenProvider.extractAuthentication(request);
+        String email = authentication.getName();
+
+        Member member = memberRepository.findByEmail(email)
+                .orElseThrow(()-> new MemberHandler(ErrorStatus.MEMBER_NOT_FOUND));
+        return MemberConverter.toMemberInfoDTO(member);
+    }
+
     @Override
     public Page<MemberMission> getMyMissionList(Long memberId, Integer page) { // 3. 내가 진행 중인 미션 목록 조회하기 API
         Member member = memberRepository.findById(memberId).get();

@@ -4,40 +4,38 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import umc.spring.study.config.security.jwt.JwtAuthenticationFilter;
+import umc.spring.study.config.security.jwt.JwtTokenProvider;
 
 @EnableWebSecurity //SpringSecurity 활성화(내 보안 설정이 기본 설정보다 우선 적용)
 @Configuration
 public class SecurityConfig {
 
     @Bean
-    //보안설정 구사
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
         http
-                // HTTP 요청에 대한 접근 제어 설정
-                .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/", "/home", "/signup", "/members/signup", "/css/**", "/v3/api-docs/**",
-                                "/swagger-ui/**",
-                                "/swagger-ui.html").permitAll() //특정 URL 패턴에 대한 접근 권한 설정
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .anyRequest().authenticated()
+                .sessionManagement(session ->
+                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
-                // 폼 기반 로그인 설정
-                .formLogin((form) -> form
-                        .loginPage("/login") // 경로 지정
-                        .defaultSuccessUrl("/home", true) //성공 시
-                        .permitAll() // 모든 사용자 접근 o
+                .authorizeHttpRequests(
+                        (requests) -> requests
+                                .requestMatchers("/", "/members/join", "/members/login", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                                .requestMatchers("/admin/**").hasRole("ADMIN")
+                                .anyRequest().authenticated()
                 )
-                .logout((logout) -> logout
-                        .logoutUrl("/logout")
-                        .logoutSuccessUrl("/login?logout")
-                        .permitAll()
-                );
+                .csrf()
+                .disable()
+                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {
