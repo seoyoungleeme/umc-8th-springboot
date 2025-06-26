@@ -1,7 +1,12 @@
 package umc.spring.study.web.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import umc.spring.study.domain.enums.Role;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -10,9 +15,16 @@ import java.util.List;
 public class MemberRequestDTO {
 
     @Getter
+    @Setter
+    @NoArgsConstructor
     public static class JoinDto{
         @NotBlank
         String name;
+        @NotBlank
+        @Email
+        String email; // 이메일 필드 추가
+        @NotBlank
+        String password; // 비밀번호 필드 추가
         @NotNull
         Integer gender;
         @NotNull
@@ -26,5 +38,7 @@ public class MemberRequestDTO {
         @Size(min = 5, max = 12)
         String specAddress;
         List<Long> preferCategory;
+        @NotNull
+        Role role;
     }
 }

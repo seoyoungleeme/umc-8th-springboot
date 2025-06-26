@@ -23,19 +23,23 @@ public class MemberConverter {
     }
 
     public static Member toMember(MemberRequestDTO.JoinDto request){
+        Gender gender;
 
-        Gender gender = null;
+        Integer genderValue = request.getGender();
 
-        switch (request.getGender()){
-            case 1:
-                gender = Gender.MALE;
-                break;
-            case 2:
-                gender = Gender.FEMALE;
-                break;
-            case 3:
-                gender = Gender.NONE;
-                break;
+        if (genderValue == null) { // null 체크 먼저
+            gender = Gender.NONE; // 또는 디폴트 값
+        } else {
+            switch (genderValue) {
+                case 1:
+                    gender = Gender.MALE;
+                    break;
+                case 2:
+                    gender = Gender.FEMALE;
+                    break;
+                default:
+                    gender = Gender.NONE;
+            }
         }
 
         return Member.builder()
@@ -43,9 +47,13 @@ public class MemberConverter {
                 .specAddress(request.getSpecAddress())
                 .gender(gender)
                 .name(request.getName())
+                .email(request.getEmail())
+                .password(request.getPassword())
+                .role(request.getRole())
                 .memberPreferList(new ArrayList<>())
                 .build();
     }
+
     public static MemberResponseDTO.ReviewPreViewDTO myReviewPreViewDTO (Review review) {
         return MemberResponseDTO.ReviewPreViewDTO.builder()
                 .name(review.getMember().getName())
